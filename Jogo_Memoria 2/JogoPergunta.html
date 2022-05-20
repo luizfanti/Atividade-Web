@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <title>Atividades Web</title>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">INICIO</a>      
+                </li>    
+            <li class="nav-item">
+              <a class="nav-link" href="JogoMemoria.html">Jogo Memória</a>      
+              </li>      
+            <li class="nav-item">
+              <a class="nav-link" href="Efeitos.html">Efeitos</a>      
+              </li>    
+          </ul> 
+        </div>
+      </nav>  
+    
+      <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('.jogo,.animacao,.nav-jogo,.nav-animacao').hide();
+            $('.card-text,.front').hide();
+
+            function sleep (time) {
+              return new Promise((resolve) => setTimeout(resolve, time));
+            }
+
+           let botao = null;
+            $('.nav-link').click(function(){
+                botao = $(this).attr('id');
+                if(botao == 'pergunta'){
+                    $('.pergunta,.nav-pergunta').show('fadeIn');
+                    $('.jogo,.animacao,.nav-jogo,.nav-animacao').hide('fadeOut');
+                    $('.card-text').hide();
+                } else if(botao == 'jogo'){
+                    $('.jogo,.nav-jogo').show('fadeIn');
+                    $('.pergunta,.animacao,.nav-pergunta,.nav-animacao').hide('fadeOut');
+                    sleep(900).then(() => {
+                        $('.back').fadeOut();
+                        sleep(400).then(() => {
+                            $('.front').fadeIn();
+                        });
+                    });
+                } else if(botao == 'animacao'){
+                    $('.animacao,.nav-animacao').show('fadeIn');
+                    $('.pergunta,.jogo,.nav-pergunta,.nav-jogo').hide('fadeOut');
+                }
+            });
+
+            $('button').click(function(){ $(this).closest('.card').find('.card-text').slideToggle(); });
+            $('.text-danger').click(function(){ $('.alert-danger').fadeIn(); });
+            $('.text-info').click(function(){ $('.alert-info').fadeIn('slow'); });
+            $('.text-success').click(function(){$('.alert-success').fadeIn(2000);});
+            $('.home').click(function(){$('.alert-danger,.alert-info,.alert-success').fadeOut('slow');$('.card-text').fadeOut('slow');});
+            $('.toggle').click(function(){$('p').slideToggle();});
+        });
+    </script>
+</head>
+<body>
+   
+    <div class="container">
+            <div class="row mb-3">
+                <div class="col-sm-4 mt-3 mt-3">
+                    <div class="card">
+                        <img class="card-img-top" height="400" src="img/monalisa.webp" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">1. Quem pintou o quadro Mona Lisa?</h5>
+                            <p class="card-text">O pintor italiano Leonardo Da Vinci.</p>
+                            <button class="btn btn-primary">Ver a resposta</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 mt-3">
+                    <div class="card">
+                        <img class="card-img-top" height="400" src="img/mickey.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h6 class="card-title">2. Quem criou os personagens Mickey Mouse?</h6>
+                            <p id="1" class="card-text">O empresário norte-americano Walt Disney.</p>                              
+                              </div>
+                              <script>
+                                $( document.body ).click(function () {
+                                  if ( $( "1" ).first().is( ":hidden" ) ) {
+                                    $( "1" ).slideDown( "slow" );
+                                  } else {
+                                    $( "1" ).slideUp();
+                                  }
+                                });
+                                </script>  
+                        </div>
+                    </div>
+              
+                <div class="col-sm-4 mt-3">
+                    <div class="card">
+                        <img class="card-img-top" height="400" src="img/canada.webp" alt="Card image cap">
+                        <div class="card-body">
+                            <h6 class="card-title">3. Qual é o idioma oficial do Canadá??</h6>
+                            <p  class="card-text">O Canadá possui dois idiomas oficiais: inglês e francês.</p>
+                        </div>
+                        <script>
+                        $("h6").click(function(){
+                            $(this).siblings().slideToggle('slow');
+                        });
+                            </script> 
+                  </div>
+              </div>
+                 <div class="col-sm-4 mt-3">
+                    <div class="card">
+                        <img class="card-img-top" height="400" src="img/estatua.webp" alt="Card image cap">              
+                        <div class="card-body">
+                            <h5 class="card-title">4. Em qual cidade dos Estados Unidos fica a famosa Estátua da Liberdade?</h5>
+                            <p class="card-text">Nova York.</p>
+                            <button class="btn btn-primary">Ver a resposta</button>
+                        </div>
+                    </div>
+                </div>           
+
+                <div class="col-sm-4 mt-3">
+                    <div class="card">
+                        <img class="card-img-top" height="400" src="img/covid.webp" alt="Card image cap">              
+                        <div class="card-body">
+                            <h5 class="card-title">5. Em qual país foi detectado o primeiro caso de Covid-19?</h5>
+                            <p class="card-text">Na China, mais precisamente na província de Wuhan.</p>
+                            <button class="btn btn-primary">Ver a resposta</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 mt-3">
+                    <div class="card">
+                        <img class="card-img-top" height="400" src="img/homemlua.webp" alt="Card image cap">              
+                        <div class="card-body">
+                            <h5 class="card-title">5. Em que ano o homem pisou na lua?</h5>
+                            <p class="card-text">Em 1969. No dia 20 de julho, a nave Apollo 11 aterrissou em solo lunar.</p>
+                            <button class="btn btn-primary">Ver a resposta</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>  
+</html>

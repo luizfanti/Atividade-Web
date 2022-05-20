@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Jogo da Memória</title>
+  </head>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('.jogo,.animacao,.nav-jogo,.nav-animacao').hide();
+            $('.card-text,.front').hide();
+
+            function sleep (time) {
+              return new Promise((resolve) => setTimeout(resolve, time));
+            }
+
+           let botao = null;
+            $('.nav-link').click(function(){
+                botao = $(this).attr('id');
+                if(botao == 'pergunta'){
+                    $('.pergunta,.nav-pergunta').show('fadeIn');
+                    $('.jogo,.animacao,.nav-jogo,.nav-animacao').hide('fadeOut');
+                    $('.card-text').hide();
+                } else if(botao == 'jogo'){
+                    $('.jogo,.nav-jogo').show('fadeIn');
+                    $('.pergunta,.animacao,.nav-pergunta,.nav-animacao').hide('fadeOut');
+                    sleep(900).then(() => {
+                        $('.back').fadeOut();
+                        sleep(400).then(() => {
+                            $('.front').fadeIn();
+                        });
+                    });
+                } else if(botao == 'animacao'){
+                    $('.animacao,.nav-animacao').show('fadeIn');
+                    $('.pergunta,.jogo,.nav-pergunta,.nav-jogo').hide('fadeOut');
+                }
+            });
+
+       
+            $('button').click(function(){ $(this).closest('.card').find('.card-text').slideToggle(); });
+            $('.text-danger').click(function(){ $('.alert-danger').fadeIn(); });
+            $('.text-info').click(function(){ $('.alert-info').fadeIn('slow'); });
+            $('.text-success').click(function(){$('.alert-success').fadeIn(2000);});
+            $('.home').click(function(){$('.alert-danger,.alert-info,.alert-success').fadeOut('slow');$('.card-text').fadeOut('slow');});
+            $('.toggle').click(function(){$('p').slideToggle();});
+
+         
+            var id,s,r,v,i=0;
+            $('.card').click(function() {
+                id = [$(this).attr('id'),$(this).attr('class').substring(5)];
+                if(s != 0) {
+                    $("#"+id[0]+" > .front").hide();
+                    $("#"+id[0]+" >  .back").fadeIn();
+                    v = id[0];
+                    r = id[1];
+                    s = 0;
+                } else {
+                    $("#"+id[0]+" > .front").hide();
+                    $("#"+id[0]+" >  .back").fadeIn();
+                    if(r==id[1]) {
+                        if(i == 11) {
+                            sleep(500).then(() => {    
+                                alert('Jogo finalizado');
+                            });
+                        } else {
+                            r = null;
+                            s = 1;
+                            i++;
+                        }
+                    } else {
+                        sleep(1500).then(() => {
+                            $("#"+id[0]+" >  .back,#"+v+" >  .back").hide();
+                            $("#"+id[0]+" > .front,#"+v+" > .front").fadeIn();
+                            r = null;
+                            s = 1;
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+  </head>
+
+ <body>
+   
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="width: 100%; top: 0;position: fixed; z-index: 1;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav float-right">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">INICIO</a>      
+                </li>             
+            <li class="nav-item">
+                <a class="nav-link" href="JogoPergunta.html">Jogo Perguntas</a>      
+                </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Efeitos.html">Efeitos</a>      
+                </li>  
+                <form class="form-inline">
+                      <button class="btn btn-outline-success" type="button">
+            <li class="nav-item">
+                <a role="button" class="nav-link" id="jogo" style="cursor: pointer"><b>CLICK PARA INICIAR O JOGO</b></a>
+            </li>
+                      </button>
+                    </form> 
+        </ul>
+    </div>
+</nav>
+
+<div class="container jogo">
+    <div class="jumbotron jumbotron-fluid" style="margin-top: 60px;">
+        <div class="container">
+            <h2 class="display-7">Jogo de Memória</h1>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm-2 mt-3">
+            <div class="card 1" id="card-1">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/charizard.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 2" id="card-2">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/entei.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 3" id="card-3">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/exeggutor.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 4" id="card-4">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/mew.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 5" id="card-5">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/pikachu.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 6" id="card-6">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/weedle.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 6" id="card-7">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/weedle.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 5" id="card-8">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/pikachu.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 4" id="card-9">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/mew.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 3" id="card-10">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/exeggutor.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 2" id="card-11">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/entei.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        <div class="col-sm-2 mt-3">
+            <div class="card 1" id="card-12">
+                <div class="front"><img class="card-img-top img" height="200" src="img/capa.jpg" alt="Card image cap"></div>
+                <div class="back"><img class="card-img-top img" height="200" src="img/charizard.jpg" alt="Card image cap"></div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
+
+</body>
+</html>
